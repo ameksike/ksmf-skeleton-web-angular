@@ -75,7 +75,6 @@ export class CommentEditComponent implements OnInit {
   }
 
   onCancel() {
-    console.log('AAAAAAAAAAAAAAAAAAAAAAAAAA - onCancel');
     this.location.back();
   }
 
