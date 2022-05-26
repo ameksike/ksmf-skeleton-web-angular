@@ -3,7 +3,8 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { switchMap } from 'rxjs';
 import { Comment } from '../../model/comment.model';
 import { CommentService } from '../../services/comment.service';
 
@@ -13,6 +14,8 @@ import { CommentService } from '../../services/comment.service';
   styleUrls: ['./list.component.scss']
 })
 export class CommentListComponent implements AfterViewInit, OnInit {
+
+  routehandler: any;
 
   displayedColumns: string[] = ['comment', 'flightId', 'user', 'action'];
   dataSource = new MatTableDataSource<Comment>([]);
@@ -45,9 +48,11 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   }
 
   ngOnInit(): void {
-    this.flightId = this.route.snapshot.params['id'];
-    console.log('ngOnInit', this.flightId);
-    this.srvComment.list(this.flightId ? { flightId: this.flightId } : {});
+
+    this.routehandler = this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = params.get('id');
+      this.srvComment.list(id ? { flightId: id } : {});
+    });
 
     this.responsive.observe([
       Breakpoints.XSmall,
@@ -55,7 +60,7 @@ export class CommentListComponent implements AfterViewInit, OnInit {
       Breakpoints.Large
     ]).subscribe(result => {
       const breakpoints = result.breakpoints;
-  
+
       if (breakpoints[Breakpoints.XSmall]) {
         this.displayedColumns = ['comment', 'action'];
       } else {
