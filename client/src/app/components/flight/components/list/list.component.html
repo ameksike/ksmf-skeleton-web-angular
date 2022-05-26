@@ -4,7 +4,7 @@
     <mat-list-option (click)="onSelect()">
         All
     </mat-list-option>
-    <mat-list-option *ngFor="let item of data" (click)="onSelect(item)">
+    <mat-list-option *ngFor="let item of data" (click)="onSelect(item)" >
         {{item.id}} - {{item.name}}
     </mat-list-option>
 </mat-selection-list>
