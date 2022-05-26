@@ -1,5 +1,6 @@
 # ksmf-skeleton-web-angular
-Template to create Web application based on Angular easily. This project implements an example where three main entities are managed: Users, Tags and Comments.
+Template to create web application based on [Angular](https://angular.io/), [Angular Material](https://material.angular.io/)
+ and [KsMf](https://github.com/ameksike/ksmf/wiki) in an easy way. This project implements an example where three main entities are managed: Users, Tags and Comments.
 
 ## Run demo
 - npm run client:watch
