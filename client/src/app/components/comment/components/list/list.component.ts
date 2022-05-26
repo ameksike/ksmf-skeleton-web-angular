@@ -3,7 +3,8 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ToolbarService } from 'src/app/services/toolbar.service';
 import { Comment } from '../../model/comment.model';
 import { CommentService } from '../../services/comment.service';
 
@@ -14,19 +15,22 @@ import { CommentService } from '../../services/comment.service';
 })
 export class CommentListComponent implements AfterViewInit, OnInit {
 
+  routehandler: any;
+
   displayedColumns: string[] = ['comment', 'flightId', 'user', 'action'];
   dataSource = new MatTableDataSource<Comment>([]);
   error: string;
   flightId: string;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private srvComment: CommentService,
     private router: Router,
     private route: ActivatedRoute,
-    private responsive: BreakpointObserver
+    private responsive: BreakpointObserver,
+    private srvToolbar: ToolbarService
   ) {
     this.error = '';
     this.flightId = '';
@@ -42,12 +46,20 @@ export class CommentListComponent implements AfterViewInit, OnInit {
           break;
       }
     });
+
+    this.srvToolbar.model.subscribe(event => {
+      if (event.action === 'click' && event.data.action === 'create') {
+        this.router.navigate(['/comment/new']);
+      }
+    });
   }
 
   ngOnInit(): void {
-    this.flightId = this.route.snapshot.params['id'];
-    console.log('ngOnInit', this.flightId);
-    this.srvComment.list(this.flightId ? { flightId: this.flightId } : {});
+
+    this.routehandler = this.route.paramMap.subscribe((params: ParamMap) => {
+      const id = params.get('id');
+      this.srvComment.list(id ? { flightId: id } : {});
+    });
 
     this.responsive.observe([
       Breakpoints.XSmall,
@@ -55,7 +67,7 @@ export class CommentListComponent implements AfterViewInit, OnInit {
       Breakpoints.Large
     ]).subscribe(result => {
       const breakpoints = result.breakpoints;
-  
+
       if (breakpoints[Breakpoints.XSmall]) {
         this.displayedColumns = ['comment', 'action'];
       } else {

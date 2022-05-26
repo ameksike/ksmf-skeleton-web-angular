@@ -1,6 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'comment-layout',
@@ -14,13 +13,10 @@ export class CommentLayoutComponent implements OnInit {
   right: { [key: string]: boolean } = {};
 
   constructor(
-    private responsive: BreakpointObserver,
-    private route: ActivatedRoute
+    private responsive: BreakpointObserver
   ) { }
 
   ngOnInit(): void {
-    const id = this.route.snapshot.params['id'];
-    console.log('????-id', id);
 
     this.responsive.observe([
       Breakpoints.XSmall,

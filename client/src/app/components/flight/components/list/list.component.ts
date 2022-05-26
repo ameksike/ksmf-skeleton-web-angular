@@ -33,7 +33,7 @@ export class ListComponent implements OnInit {
     this.srvFliht.load();
   }
 
-  onSelect(item: Flight) {
-    this.router.navigate(['/comment/list/' + item.id]);
+  onSelect(item?: Flight) {
+    this.router.navigateByUrl("/comment/list/" + (item ? item.id : ''));
   }
 }

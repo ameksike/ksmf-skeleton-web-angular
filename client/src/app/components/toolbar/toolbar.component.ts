@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ToolbarOption, ToolbarService } from 'src/app/services/toolbar.service';
 
 @Component({
   selector: 'app-toolbar',
@@ -7,9 +8,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ToolbarComponent implements OnInit {
 
-  constructor() { }
+  btn: any;
+
+  constructor(private srvToolbar: ToolbarService) {
+    this.srvToolbar.model.subscribe(event => {
+      if (event.action !== 'click') {
+        this.btn = event.data;
+      }
+    });
+  }
 
   ngOnInit(): void {
+    this.srvToolbar.load();
+  }
+
+  onClick(item: ToolbarOption) {
+    this.srvToolbar.throw(item);
   }
 
 }
