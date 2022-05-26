@@ -1,0 +1,47 @@
+<span class="title"> Comment </span>
+
+<form [formGroup]="form" (ngSubmit)="submitForm()" class="box-vertical form">
+
+    <mat-form-field appearance="fill">
+        <mat-label>Content</mat-label>
+        <textarea matInput placeholder="Set the comment content" formControlName="comment" > </textarea>
+        <!-- error -->
+        <mat-error *ngIf="onError('comment', 'required')">
+            You must provide a <strong>comment text</strong>
+        </mat-error>
+        <mat-error *ngIf="comment?.errors?.['minlength']">
+            Name must be at least 6 characters long.
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>Flight Id</mat-label>
+        <input matInput placeholder="Set the Flight Id, Ex: 333" formControlName="flightId">
+        <!-- error -->
+        <mat-error *ngIf="onError('flightId', 'required')">
+            You must provide a <strong>flightId</strong>
+        </mat-error>
+        <mat-error *ngIf="flightId?.errors?.['minlength']">
+            Name must be at least 3 characters long.
+        </mat-error>
+        <mat-error *ngIf="onError('flightId', 'pattern')">
+            You must provide a <strong>flightId as a number</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="fill">
+        <mat-label>User owner</mat-label>
+        <input matInput placeholder="Set the user owner" formControlName="userId">
+        <!-- error -->
+        <mat-error *ngIf="onError('userId', 'required')">
+            You must provide a <strong>userId</strong>
+        </mat-error>
+        <mat-error *ngIf="onError('userId', 'pattern')">
+            You must provide a <strong>userId as a number</strong>
+        </mat-error>
+    </mat-form-field>
+
+    <button mat-raised-button color="primary" type="submit">Save</button>
+    <button mat-raised-button color="secundary" (onclik)="onCancel()">Back</button>
+
+</form>

@@ -1,0 +1,31 @@
+<span class="title"> Comment Details</span>
+<mat-card class="comment-card">
+    <mat-card-content>
+        <div *ngIf="model" class="container box-vertical">
+
+            <div class="item">
+                <span class="subtitle"> Content: </span>
+                <span> {{ model.comment }}</span>
+            </div>
+
+            <div class="item">
+                <span class="subtitle"> Flight ID: </span>
+                <span> {{ model.flightId }}</span>
+            </div>
+
+            <div class="item">
+                <span class="subtitle"> User: </span>
+                <span> {{ model.user?.id }}</span>
+            </div>
+
+            <div class="item">
+                <span class="subtitle"> Date: </span>
+                <span> {{ model.date }}</span>
+            </div>
+        </div>
+
+    </mat-card-content>
+    <mat-card-actions align="end">
+        <button mat-raised-button color="secundary" (onclik)="onCancel()">Back</button>
+    </mat-card-actions>
+</mat-card>

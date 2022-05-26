@@ -1,0 +1,22 @@
+{
+  "name": "demo-oauth-angular",
+  "version": "1.0.0",
+  "description": "Oauth Angular demo",
+  "main": "node server/bin/server.js",
+  "scripts": {
+    "start": "node server/bin/server.js",
+    "build": "cd client && npm install && npm run build",
+    "test": "cd client && npm run test",
+    "dev": "nodemon server/bin/server.js",
+    "client:start": "cd client && npm start",
+    "client:build": "cd client && npm run build",
+    "client:watch": "cd client && npm run watch"    
+  },
+  "author": "TropiPay Team",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.24.0",
+    "ksmf": "^1.0.40",
+    "nodemon": "^2.0.15"
+  }
+}

@@ -1,0 +1,338 @@
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.box {
+    display: flex;
+}
+
+.box-horizontal {
+    display: flex;
+    flex-direction: row;
+}
+
+.box-vertical,
+.MuiTypography-root.box-vertical {
+    display: flex;
+    flex-direction: column;
+}
+
+.box-fit {
+    max-width: 100%;
+    overflow: hidden;
+}
+
+.box-align-center {
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+}
+
+.box-align-between {
+    justify-content: space-between;
+}
+
+.box-align-right {
+    justify-content: right;
+}
+
+.box-align-left {
+    justify-content: left;
+}
+
+.box-align-bottom {
+    justify-content: flex-end;
+}
+
+.box-align-top,
+.MuiListItem-root.box-align-top {
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.box-shadow {
+    -webkit-box-shadow: 7px 4px 9px #d3d2e1;
+    box-shadow: 7px 4px 9px #d3d2e1;
+}
+
+.box-color-1 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #c52887;
+    color: white;
+}
+
+.box-color-2 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #3d3991;
+    color: white;
+}
+
+.box-color-3 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #109e90;
+    color: white;
+}
+
+.box-color-4 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #01579b;
+    color: white;
+}
+
+.box-color-5 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #06b4c1;
+    color: white;
+}
+
+.box-color-6 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #efa329;
+    color: white;
+}
+
+.box-color-7 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #ef5270;
+    color: white;
+}
+
+.box-color-8 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #5573a4;
+    color: white;
+}
+
+.box-color-9 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #f77a1c;
+    color: white;
+}
+
+.box-color-10 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #495b53;
+    color: white;
+}
+
+.box-color-11 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #7d1f93;
+    color: white;
+}
+
+.box-color-12 {
+    border-radius: 0.15em;
+    padding: 0.05em 0.4em;
+    background-color: #f4654a;
+    color: white;
+}
+
+.box-grant-item {
+    background-color: #e0e3ec;
+    background: #e0e3ec !important;
+    margin-right: 1rem;
+    padding: 8px;
+}
+
+.box-line {
+    border-bottom-color: #d7d6df;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+
+.box-label {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.box-label-truncate-2 {
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+}
+
+.box-label-bold,
+.MuiTypography-root.box-label-bold {
+    font-weight: 700;
+}
+
+.box-label-upp {
+    text-transform: uppercase;
+}
+
+.box-label-low {
+    text-transform: lowercase;
+}
+
+.box-label-cap {
+    text-transform: capitalize;
+}
+
+.box-label-bg {
+    color: white;
+    background-color: #8d40cc;
+}
+
+.box-label-b7 {
+    font-weight: 700;
+}
+
+.box-label-center {
+    text-align: center;
+}
+
+.box-label-right {
+    text-align: right;
+}
+
+.box-label-left {
+    text-align: left;
+}
+
+.box-label-justify {
+    text-align: justify;
+}
+
+.box-label-bold {
+    font-weight: bold;
+
+    p {
+        font-weight: bold;
+    }
+}
+
+.box-item {
+    max-width: 99%;
+}
+
+.box-border-curved {
+    border: 1px solid #dddce2;
+    -moz-border-radius: 7px;
+    -webkit-border-radius: 7px;
+}
+
+.box-border-curved-top {
+    -moz-border-radius: 7px 7px 0 0;
+    -webkit-border-radius: 7px 7px 0 0;
+    margin-bottom: 7px 7px 0 0;
+}
+
+.box-border-curved-bottom {
+    -moz-border-radius: 0 0 7px 7px;
+    -webkit-border-radius: 0 0 7px 7px;
+    margin-bottom: 0 0 7px 7px;
+}
+
+
+.box-panel {
+    padding: 2rem;
+    margin: 2rem 0;
+
+    -webkit-box-shadow: 5px 5px 23px -9px rgba(57, 54, 91, 0.31);
+    -moz-box-shadow: 5px 5px 23px -9px rgba(57, 54, 91, 0.31);
+    box-shadow: 5px 5px 23px -9px rgba(57, 54, 91, 0.31);
+
+    border-radius: 4px 4px 4px 4px;
+    -moz-border-radius: 4px 4px 4px 4px;
+    -webkit-border-radius: 4px 4px 4px 4px;
+    background-color: white;
+}
+
+.box-padding {
+    padding: 0.5rem;
+}
+
+.box-padding-1 {
+    padding: 1rem;
+}
+
+.box-padding-2 {
+    padding: 2rem;
+}
+
+.box-padding-top-2 {
+    padding-top: 2rem;
+}
+
+.box-padding-bottom-2 {
+    padding-bottom: 2rem;
+}
+
+.box-padding-right-2 {
+    padding-right: 2rem;
+}
+
+.box-margin-1 {
+    margin: 1rem;
+}
+
+.box-margin-2 {
+    margin: 2rem;
+}
+
+.box-margin-right-2 {
+    margin-right: 2rem;
+}
+
+.box-margin-top {
+    margin-top: 0.5rem;
+}
+
+.box-margin-top-1 {
+    margin-top: 1rem;
+}
+
+.box-margin-bottom {
+    margin-bottom: 0.5rem;
+}
+
+.box-margin-bottom-1 {
+    margin-bottom: 1rem;
+}
+
+.box-margin-bottom-2 {
+    margin-bottom: 2rem;
+}
+
+.box-margin-left-1 {
+    margin-left: 1rem;
+}
+
+.box-margin-right-1 {
+    margin-right: 1rem;
+}
+
+.title {
+    font-weight: 700;
+    font-size: large;
+    margin: 1rem 0;
+}
+
+.subtitle {
+    font-weight: 600;
+    padding: 3rem 0;
+}

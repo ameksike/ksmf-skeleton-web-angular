@@ -1,0 +1,35 @@
+{
+    "development": {
+        "port": 3006,
+        "host": "localhost",
+        "protocol": "http",
+        "public": "../client/dist/client/",
+        "static": "/",
+        "log": 2,
+        "module": {
+            "load": [
+                "user",
+                "comment",
+                "app"
+            ]
+        },
+        "event": {},
+        "helper": {
+            "error": {
+                "name": "ksmf",
+                "type": "lib",
+                "namespace": "app.Error"
+            },
+            "logger": {
+                "name": "ksmf",
+                "type": "lib",
+                "namespace": "app.Logger"
+            },
+            "logger.class": {
+                "name": "ksmf",
+                "type": "package",
+                "namespace": "app.Logger"
+            }
+        }
+    }
+}
