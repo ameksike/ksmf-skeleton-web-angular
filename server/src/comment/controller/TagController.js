@@ -8,7 +8,7 @@
  * */
 const KsMf = require('ksmf');
 
-class DefaultController extends KsMf.app.Controller {
+class TagController extends KsMf.app.Controller {
 
     async init() {
         //... Define logger service as global for his controller
@@ -18,19 +18,19 @@ class DefaultController extends KsMf.app.Controller {
     }
 
     /**
-     * @description get comment list 
+     * @description get tag list 
      *              see http://localhost:3005/api/v1/doc/
      * @param {OBJECT} req 
      * @param {OBJECT} res 
      * @param {OBJECT} next 
      */
     async list(req, res, next) {
+        const page = parseInt(req.query.page) || 1;
+        const size = req.query.size;
+        const filter = req.query.filter;
+        const sort = req.query.sort;
         try {
-            const page = parseInt(req.query.page) || 1;
-            const size = req.query.size;
-            const filter = req.query.filter;
-            const sort = req.query.sort;
-            const profileData = await this.srvExternal.listCommnet(page, size, filter, sort);
+            const profileData = await this.srvExternal.listTag(page, size, filter, sort);
             res.json(profileData);
         } catch (error) {
             this.logger.error('list', error);
@@ -42,4 +42,4 @@ class DefaultController extends KsMf.app.Controller {
     }
 
 }
-module.exports = DefaultController;
+module.exports = TagController;

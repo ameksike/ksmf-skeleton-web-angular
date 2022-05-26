@@ -75,6 +75,22 @@ class MyAPI extends SrvAPI {
             method: 'get'
         });
     }
+
+    /**
+     * @description get comments list  
+     *              http://localhost:3005/api/v1/doc/
+     * @param {NUMBER} page 
+     * @param {NUMBER} size 
+     * @param {OBJECT|STRING} filter 
+     * @param {ARRAY|STRING} sort 
+     * @returns {OBJECT}
+     */
+    async listTag(page = 1, size = 10, filter = '', sort = '') {
+        return await this.req({
+            url: `/api/v1/tag?page=${page}&size=${size}&filter=${filter}&sort=${sort}`,
+            method: 'get'
+        });
+    }
 }
 
 module.exports = MyAPI;
