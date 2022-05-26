@@ -11,226 +11,71 @@ export class CommentService {
 
   constructor() {
     this.model = new EventEmitter();
-    this.url = '/comment';
+    this.url = '/api/v1/comment';
   }
 
   list(filter?: { [key: string]: any }) {
-
-    const data = [{
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 666,
-      date: '2022-05-31',
-      comment: "My first comment 1.0",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mario Code',
-        id: 136
-      },
-      flightId: 666,
-      date: '2022-05-31',
-      comment: "Not agree comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Mito Code',
-        id: 135
-      },
-      flightId: 897,
-      comment: "My first comment 1.1",
-      id: 1
-    },
-    {
-      user: {
-        name: 'Matp Code',
-        id: 135
-      },
-      flightId: 111,
-      comment: "My first comment 1.1",
-      id: 1
-    }];
-
-    const flightId = filter && filter['flightId'];
-    const list = flightId ? data.filter(item => item.flightId === parseInt(flightId)) : data;
-
-    this.model.emit({
-      action: 'list',
-      data: list
-    });
-
-    /*fetch(this.url)
+    console.log('list', filter);
+    const params = filter ? "filter=" + JSON.stringify(filter) : ''
+    fetch(this.url + '?' + params)
       .then(response => response.json())
-      .then(response => this.model.emit({ action: 'list', data: response.data }))
-      .catch(error => this.model.emit({ action: 'error', data: 'Not loaded data' }));*/
+      .then(response => this.model.emit({ action: 'list', data: response.data.data }))
+      .catch(error => this.model.emit({ action: 'error', data: 'Not loaded data' }));
   }
 
   select(id: number) {
     console.log('select', id);
-    this.model.emit({
-      action: 'select',
-      data: {
-        user: {
-          name: 'Mito Code',
-          id: 135
-        },
-        flightId: 303,
-        comment: "My first comment 1.0",
-        id
-      }
-    });
 
-    /*
     fetch(`${this.url}/${id}`)
       .then(response => response.json())
       .then(response => this.model.emit({ action: 'list', data: response.data }))
-      .catch(error => this.model.emit({ action: 'error', data: 'Not loaded data' }));*/
+      .catch(error => this.model.emit({ action: 'error', data: 'Not loaded data' }));
   }
 
   update(comment: Comment) {
     console.log('update', comment);
-    this.model.emit({
-      action: 'update',
-      data: {
-        user: {
-          name: 'Mito Code',
-          id: 135
-        },
-        flightId: 666,
-        comment: "My first comment 1.0",
-        id: 1
-      }
-    });
+
+    fetch(`${this.url}/${comment.id}`, {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(comment)
+    })
+      .then(response => response.json())
+      .then(response => this.model.emit({ action: 'update', data: response.data }))
+      .catch(error => this.model.emit({ action: 'error', data: 'ERROR: on update acction' }));
   }
 
   create(comment: Comment) {
     console.log('create', comment);
-    this.model.emit({
-      action: 'create',
-      data: {
-        user: {
-          name: 'Mito Code',
-          id: 135
-        },
-        flightId: 666,
-        comment: "My first comment 1.0",
-        id: 1
-      }
-    });
+
+    fetch(this.url, {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(comment)
+    })
+      .then(response => response.json())
+      .then(response => this.model.emit({ action: 'create', data: response.data }))
+      .catch(error => this.model.emit({ action: 'error', data: 'ERROR: on create acction' }));
   }
 
   save(comment: Comment) {
+    console.log('save', comment);
     return comment.id ?
       this.update(comment) :
       this.create(comment);
   }
 
   delete(id: number) {
-    this.model.emit({
-      action: 'delete',
-      data: {
-        user: {
-          name: 'Mito Code',
-          id: 135
-        },
-        flightId: 303,
-        comment: "My first comment 1.0",
-        id
-      }
-    });
+    console.log('delete', id);
+    fetch(`${this.url}/${id}`, { method: 'DELETE' })
+      .then(response => response.json())
+      .then(response => this.model.emit({ action: 'delete', data: response.data }))
+      .catch(error => this.model.emit({ action: 'error', data: 'ERROR: on delete acction' }));
   }
 }
