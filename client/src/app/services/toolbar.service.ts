@@ -19,11 +19,6 @@ export class ToolbarService {
     this.model = new EventEmitter;
     this.data = [
       {
-        label: 'Create element',
-        action: 'create',
-        icon: 'add_circle_outline',
-        tooltip: 'Create element'
-      }, {
         label: 'Add to favorite this app',
         tooltip: 'Add to favorite this app',
         action: 'favorite',

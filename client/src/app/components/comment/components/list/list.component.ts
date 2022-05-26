@@ -47,11 +47,11 @@ export class CommentListComponent implements AfterViewInit, OnInit {
       }
     });
 
-    this.srvToolbar.model.subscribe(event => {
+    /*this.srvToolbar.model.subscribe(event => {
       if (event.action === 'click' && event.data.action === 'create') {
         this.router.navigate(['/comment/new']);
       }
-    });
+    });*/
   }
 
   ngOnInit(): void {
