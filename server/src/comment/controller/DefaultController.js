@@ -30,8 +30,8 @@ class DefaultController extends KsMf.app.Controller {
             const size = req.query.size;
             const filter = req.query.filter;
             const sort = req.query.sort;
-            const profileData = await this.srvExternal.listCommnet(page, size, filter, sort);
-            res.json(profileData);
+            const result = await this.srvExternal.listCommnet(page, size, filter, sort);
+            res.json(result);
         } catch (error) {
             this.logger.error('list', error);
             res.status(404).json({
@@ -39,6 +39,34 @@ class DefaultController extends KsMf.app.Controller {
                 name: error.name
             });
         }
+    }
+
+    async select(req, res) {
+        const id = req.params['id'];
+        const result = await this.srvExternal.selectComment(id);
+        res.json(result);
+    }
+
+    async insert(req, res) {
+        const payload = req.body;
+        const result = await this.srvExternal.insertComment(payload);
+        this.logger.prefix('Comment.Controller').info('INSERT', result);
+        res.json(result);
+    }
+
+    async update(req, res) {
+        const id = req.params['id'];
+        const payload = req.body;
+        const result = await this.srvExternal.updateComment({ id, ...payload });
+        this.logger.prefix('Comment.Controller').info('UPDATE', result);
+        res.json(result);
+    }
+
+    async delete(req, res) {
+        const id = req.params['id'];
+        const result = await this.srvExternal.deleteComment(id);
+        this.logger.prefix('Comment.Controller').info('DELETE', result);
+        res.json(result);
     }
 
 }

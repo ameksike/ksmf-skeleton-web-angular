@@ -77,6 +77,104 @@ class MyAPI extends SrvAPI {
     }
 
     /**
+     * @description delete comment by id
+     * @param {NUMBER} id 
+     * @returns {OBJECT} {
+            "data": {
+                "id": 12,
+                "comment": "14323434",
+                "flightId": 2,
+                "userId": 1,
+                "date": "2022-05-26T07:13:05.822Z"
+            }
+        }
+     */
+    deleteComment(id) {
+        return this.req({
+            url: `/api/v1/comment/${id}`,
+            method: 'delete'
+        });
+    }
+
+    /**
+     * @description select comment by id
+     * @param {NUMBER} id 
+     * @returns {OBJECT} {
+            "data": {
+                "id": 12,
+                "comment": "14323434",
+                "flightId": 2,
+                "userId": 1,
+                "date": "2022-05-26T07:13:05.822Z",
+                "user": {
+                    "id": 1,
+                    "name": "John Doe"
+                },
+                "tags": [{
+                    "id": 1,
+                    "name": "Críticos"
+                }]
+            }
+        }
+     */
+    selectComment(id) {
+        return this.req({
+            url: `/api/v1/comment/${id}`,
+            method: 'delete'
+        });
+    }
+
+    /**
+     * @description create comment
+     * @param {OBJECT} data 
+     * @param {NUMBER} data.comment 
+     * @param {NUMBER} data.flightId 
+     * @param {NUMBER} data.userId
+     * @param {ARRAY} data.tags
+     * @returns {OBJECT} {
+            "data": {
+                "id": 12,
+                "comment": "14323434",
+                "flightId": 2,
+                "userId": 1,
+                "date": "2022-05-26T07:13:05.822Z"
+            }
+        }
+     */
+    insertComment(data) {
+        return this.req({
+            url: `/api/v1/comment`,
+            method: 'post',
+            data
+        });
+    }
+
+    /**
+     * @description update comment
+     * @param {OBJECT} data 
+     * @param {NUMBER} data.comment 
+     * @param {NUMBER} data.flightId 
+     * @param {NUMBER} data.userId
+     * @param {ARRAY} data.tags
+     * @returns {OBJECT} {
+            "data": {
+                "id": 12,
+                "comment": "14323434",
+                "flightId": 2,
+                "userId": 1,
+                "date": "2022-05-26T07:13:05.822Z"
+            }
+        }
+     */
+    updateComment(data) {
+        return this.req({
+            url: `/api/v1/comment/${data.id}`,
+            method: 'put',
+            data
+        });
+    }
+
+    /**
      * @description get comments list  
      *              http://localhost:3005/api/v1/doc/
      * @param {NUMBER} page 
