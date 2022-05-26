@@ -55,6 +55,7 @@ For more information see the following link: [ksmf-skeleton-rest](https://github
 - cd client/
 - ng serve --open 
 - ng generate component components/toolbar
+- ng generate service services/toolbar
 
 - ng generate module components/flight
 - ng generate component components/flight/components/list

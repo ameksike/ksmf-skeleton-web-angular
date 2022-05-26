@@ -4,7 +4,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, ParamMap, Router } from '@angular/router';
-import { switchMap } from 'rxjs';
+import { ToolbarService } from 'src/app/services/toolbar.service';
 import { Comment } from '../../model/comment.model';
 import { CommentService } from '../../services/comment.service';
 
@@ -22,14 +22,15 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   error: string;
   flightId: string;
 
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
 
   constructor(
     private srvComment: CommentService,
     private router: Router,
     private route: ActivatedRoute,
-    private responsive: BreakpointObserver
+    private responsive: BreakpointObserver,
+    private srvToolbar: ToolbarService
   ) {
     this.error = '';
     this.flightId = '';
@@ -43,6 +44,12 @@ export class CommentListComponent implements AfterViewInit, OnInit {
         case "error":
           this.error = event.data;
           break;
+      }
+    });
+
+    this.srvToolbar.model.subscribe(event => {
+      if (event.action === 'click' && event.data.action === 'create') {
+        this.router.navigate(['/comment/new']);
       }
     });
   }
