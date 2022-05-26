@@ -120,7 +120,7 @@ class MyAPI extends SrvAPI {
     selectComment(id) {
         return this.req({
             url: `/api/v1/comment/${id}`,
-            method: 'delete'
+            method: 'get'
         });
     }
 

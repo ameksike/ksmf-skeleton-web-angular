@@ -17,24 +17,20 @@ export class CommentService {
   list(filter?: { [key: string]: any }) {
     console.log('list', filter);
     const params = filter ? "filter=" + JSON.stringify(filter) : ''
-    fetch(this.url + '?' + params)
+    fetch(this.url + '?' + params, { method: 'GET' })
       .then(response => response.json())
       .then(response => this.model.emit({ action: 'list', data: response.data.data }))
       .catch(error => this.model.emit({ action: 'error', data: 'Not loaded data' }));
   }
 
   select(id: number) {
-    console.log('select', id);
-
-    fetch(`${this.url}/${id}`)
+    fetch(`${this.url}/${id}`, { method: 'GET' })
       .then(response => response.json())
-      .then(response => this.model.emit({ action: 'list', data: response.data }))
+      .then(response => this.model.emit({ action: 'select', data: response.data }))
       .catch(error => this.model.emit({ action: 'error', data: 'Not loaded data' }));
   }
 
   update(comment: Comment) {
-    console.log('update', comment);
-
     fetch(`${this.url}/${comment.id}`, {
       method: 'PUT',
       headers: {
@@ -49,8 +45,6 @@ export class CommentService {
   }
 
   create(comment: Comment) {
-    console.log('create', comment);
-
     fetch(this.url, {
       method: 'POST',
       headers: {
@@ -65,14 +59,12 @@ export class CommentService {
   }
 
   save(comment: Comment) {
-    console.log('save', comment);
     return comment.id ?
       this.update(comment) :
       this.create(comment);
   }
 
   delete(id: number) {
-    console.log('delete', id);
     fetch(`${this.url}/${id}`, { method: 'DELETE' })
       .then(response => response.json())
       .then(response => this.model.emit({ action: 'delete', data: response.data }))
