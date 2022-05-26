@@ -25,3 +25,8 @@ table {
     width: 20%;
     padding: 5px;
 }
+/*
+@include mat-table-columns((
+    comment: (width: 60%, color: gray),
+    flightId: (width: 10%)
+));*/

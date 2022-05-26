@@ -15,13 +15,21 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatSelectModule } from '@angular/material/select';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
+
+
+import { TagsComponent } from './components/tags/tags.component';
 
 @NgModule({
   declarations: [
     CommentListComponent,
     CommentEditComponent,
     CommentShowComponent,
-    CommentLayoutComponent
+    CommentLayoutComponent,
+    TagsComponent
   ],
   imports: [
     CommonModule,
@@ -36,7 +44,10 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatIconModule,
     MatCardModule,
     MatButtonModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatChipsModule,
+    MatSelectModule,
+    MatAutocompleteModule
   ]
 })
 export class CommentModule { }
