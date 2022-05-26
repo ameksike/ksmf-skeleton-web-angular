@@ -14,27 +14,13 @@ class UserModule extends KsMf.app.Module {
      *              form more information see: https://github.com/ameksike/ksmf/wiki/Routes
      */
     initConfig() {
-        //... prefix:   /api/v1/security
+        //... prefix:   /api/v1/user
         const prefix = "/api/v1" + this.prefix;
         
         this.routes = [{
-            // oauth authorization code: step 1
-            route: prefix + "/oauth/connected",
+            route: prefix,
             controller: 'DefaultController',
-            action: 'oauthConnect',
-            method: 'get'
-        },{
-            // oauth authorization code: step 2
-            route: prefix + "/oauth/response",
-            controller: 'DefaultController',
-            action: 'oauthResponse',
-            method: 'get'
-        },  {
-            // oauth client credential
-            route: prefix + "/oauth/apikey",
-            controller: 'DefaultController',
-            action: 'oauthApikey',
-            method: 'get'
+            method: 'rest'
         }];
     }
 

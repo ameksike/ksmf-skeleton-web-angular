@@ -6,6 +6,10 @@ Template to create web application based on [Angular](https://angular.io/), [Ang
 - npm run client:watch
 - npm start 
 
+## Run develop mode 
+- npm run client:build
+- npm run dev
+
 ## Integration 
 This project depends on an external REST API service which provides all the data, therefore it works as an example of system integration. To connect this application with the external service follow the steps below:
 - git clone https://github.com/ameksike/ksmf-skeleton-rest.git

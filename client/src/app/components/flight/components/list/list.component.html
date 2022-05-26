@@ -1,14 +1,17 @@
-<span class="title"> Flights List </span>
+<div class="box-vertical">
+    <span class="title"> Flights List </span>
 
-<mat-selection-list #flights *ngIf="!error" [multiple]="false">
-    <mat-list-option (click)="onSelect()">
-        All
-    </mat-list-option>
-    <mat-list-option *ngFor="let item of data" (click)="onSelect(item)" >
-        {{item.id}} - {{item.name}}
-    </mat-list-option>
-</mat-selection-list>
+    <mat-selection-list #flights *ngIf="!error" [multiple]="false">
+        <mat-list-option (click)="onSelect()">
+            All
+        </mat-list-option>
+        <mat-list-option *ngFor="let item of data" (click)="onSelect(item)">
+            {{item.id}} - {{item.name}}
+        </mat-list-option>
+    </mat-selection-list>
 
-<span *ngIf="error">
-    No data to show
-</span>
+    <span *ngIf="error" class="msg-empty">
+        No data to show
+    </span>
+
+</div>

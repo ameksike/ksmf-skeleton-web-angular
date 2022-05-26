@@ -7,13 +7,33 @@
  * @version    	1.0
  * */
 const KsMf = require('ksmf');
-const axios = require('axios');
-const qs = require('qs');
 
 class DefaultController extends KsMf.app.Controller {
 
+    async init() {
+        //... Define logger service as global for his controller
+        this.logger = this.helper.get('logger');
+        //... Define user service as global for his controller
+        this.srvExternal = this.helper.get('MyAPI');
+    }
+
     /**
-     * @description get user profile data
+     * @description get safe JSON decode
+     * @param {OBJECT} payload 
+     * @param {STRING} key 
+     * @returns 
+     */
+     getObj(payload, key) {
+        try {
+            return payload[key] ? JSON.parse(payload[key]) : null;
+        }
+        catch (error) {
+            return null;
+        }
+    }
+
+    /**
+     * @description get comment list 
      *              see https://tpp.stoplight.io/docs/tropipay-api-doc/ZG9jOjEwMDY4ODg3-getting-started
      * @param {OBJECT} req 
      * @param {OBJECT} res 
@@ -21,19 +41,14 @@ class DefaultController extends KsMf.app.Controller {
      */
     async list(req, res, next) {
         try {
-            const token = req.header('token');
-            const url = this.opt.env.URL_TROPIPAY;
-
-            const profileData = await axios({
-                headers: {
-                    'Authorization': 'Bearer ' + token
-                },
-                url: url + "/api/users/profile"
-            });
-    
-            res.json(profileData.data);
+            const page = parseInt(req.query.page) || 1;
+            const size = req.query.size;
+            const filter = req.query.filter;
+            const sort = req.query.sort;
+            const profileData = await this.srvExternal.listCommnet(page, size, filter, sort);
+            res.json(profileData);
         } catch (error) {
-            this.logger.error('oauthApikey', error);
+            this.logger.error('list', error);
             res.status(404).json({
                 message: error.message,
                 name: error.name

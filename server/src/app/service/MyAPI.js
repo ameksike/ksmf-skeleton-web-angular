@@ -17,25 +17,24 @@ class MyAPI extends SrvAPI {
 
     /**
      * @description get user list 
-     * @param {NUMBER} offset 
-     * @param {NUMBER} limit 
-     * @param {STRING} criteria 
+     * @param {NUMBER} page 
+     * @param {NUMBER} size 
+     * @param {OBJECT|STRING} filter 
+     * @param {ARRAY|STRING} sort 
      * @return {OBJECT} {
             "page": 2,
-            "per_page": 6,
+            "size": 6,
             "total": 12,
-            "total_pages": 2,
             "data": [{
                 "id": 7,
-                "email": "michael.lawson@reqres.in",
-                "first_name": "Michael",
-                "last_name": "Lawson",
-                "avatar": "https://reqres.in/img/faces/7-image.jpg"
+                "name": "Michael"
             }]
      */
-    async getUsers(offset = 0, limit = 10, criteria = '') {
+    async getUsers(page = 1, size = 10, filter = '', sort = '') {
+        filter = typeof (filter) === 'string' ? filter : JSON.stringify(filter);
+        sort = typeof (sort) === 'string' ? sort : JSON.stringify(sort);
         return await this.req({
-            url: `/api/users?page=${offset}`,
+            url: `/api/v1/user?page=${page}&size=${size}&filter=${filter}&sort=${sort}`,
             method: 'get'
         });
     }
@@ -58,6 +57,22 @@ class MyAPI extends SrvAPI {
             url: "/api/users",
             method: 'post',
             data
+        });
+    }
+
+    /**
+     * @description get comments list  
+     *              http://localhost:3005/api/v1/doc/
+     * @param {NUMBER} page 
+     * @param {NUMBER} size 
+     * @param {OBJECT|STRING} filter 
+     * @param {ARRAY|STRING} sort 
+     * @returns {OBJECT}
+     */
+    async listCommnet(page = 1, size = 10, filter = '', sort = '') {
+        return await this.req({
+            url: `/api/v1/comment?page=${page}&size=${size}&filter=${filter}&sort=${sort}`,
+            method: 'get'
         });
     }
 }
