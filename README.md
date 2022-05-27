@@ -24,6 +24,8 @@ This project depends on an external REST API service which provides all the data
 
 For more information see the following link: [ksmf-skeleton-rest](https://github.com/ameksike/ksmf-skeleton-rest).
 
+![Screenshot](readme/front.jpg)
+
 ## Project skeleton 
 ```
 - client 
