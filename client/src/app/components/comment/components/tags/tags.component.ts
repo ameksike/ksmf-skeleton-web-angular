@@ -1,10 +1,12 @@
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import {Component, ElementRef, ViewChild, OnInit} from '@angular/core';
-import {FormControl} from '@angular/forms';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { Component, ElementRef, ViewChild, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormControl } from '@angular/forms';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { Tag } from '../../model/tag.model';
+import { TagService } from '../../services/tag.service';
 
 @Component({
   selector: 'tags-selector',
@@ -12,56 +14,87 @@ import {map, startWith} from 'rxjs/operators';
   styleUrls: ['./tags.component.scss']
 })
 export class TagsComponent implements OnInit {
-  separatorKeysCodes: number[] = [ENTER, COMMA];
+
+  allTags: Tag[] = [];
+
+  @Input() editable: boolean = true;
+  @Input() tags: Tag[] = [];
+  @Output() onSelect = new EventEmitter<Tag>();
+  @Output() onDelete = new EventEmitter<Tag>();
+  @Output() onAdd = new EventEmitter<Tag>();
+  @ViewChild('tagInput') tagInput!: ElementRef<HTMLInputElement>;
 
   tagCtrl = new FormControl();
-  filteredTags!: Observable<string[]>;
-  tags: string[] = [];
-  allTags: string[] = ['Apple', 'Lemon', 'Lime', 'Orange', 'Strawberry'];
+  filteredTags!: Observable<Tag[]>;
+  separatorKeysCodes: number[] = [ENTER, COMMA];
 
-  @ViewChild('fruitInput') fruitInput!: ElementRef<HTMLInputElement>;
+  constructor(private srvTag: TagService) {
+    this.srvTag.model.subscribe(event => {
+      switch (event.action) {
+        case "list":
+          this.allTags = event.data;
+          this.loadData(this.allTags);
+          break;
 
-  constructor() {
-    this.loadData(this.allTags);
+        case "error":
+          console.log('[ERROR]', event.data);
+          break;
+
+        default:
+          this.srvTag.list();
+          break;
+      }
+    });
   }
 
-  loadData(allTags:any) {
+  loadData(allTags: any) {
     this.filteredTags = this.tagCtrl.valueChanges.pipe(
       startWith(null),
-      map((tag: string | null) => (tag ? this._filter(tag) : allTags.slice())),
+      map((tag: Tag | null) => (tag ? this.filter(tag) : allTags.slice()))
     );
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.srvTag.list();
+  }
 
   add(event: MatChipInputEvent): void {
+    console.log('add');
     const value = (event.value || '').trim();
-
-    // Add our fruit
+    //... Add our tag
     if (value) {
-      this.tags.push(value);
-    }
+      this.srvTag.create({ name: value })
+        .then(data => {
+          if (data) {
+            this.tags.push(data);
+            this.onAdd.emit(data);
+          }
+          console.log('this.srvTag.create', data);
+        });
 
-    // Clear the input value
+    }
+    //... Clear the input value
     event.chipInput!.clear();
     this.tagCtrl.setValue(null);
   }
 
-  remove(fruit: string): void {
-    const index = this.tags.indexOf(fruit);
+  remove(tag: Tag): void {
+    this.onDelete.emit(tag);
+    const index = this.tags.findIndex(elem => elem.id === tag.id);
     if (index >= 0) {
       this.tags.splice(index, 1);
     }
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.tags.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
+    this.tags.push(event.option.value);
+    this.onSelect.emit(event.option.value);
+    this.tagInput.nativeElement.value = '';
     this.tagCtrl.setValue(null);
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.allTags.filter(tag => tag.toLowerCase().includes(filterValue));
+  private filter(value: Tag): Tag[] {
+    const filterValue = value && value.name ? value.name.toLowerCase() : '';
+    return this.allTags.filter(tag => tag && tag.name ? tag.name.toLowerCase().includes(filterValue) : false);
   }
 }

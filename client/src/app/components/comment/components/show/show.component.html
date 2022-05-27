@@ -22,6 +22,10 @@
                 <span class="subtitle"> Date: </span>
                 <span> {{ model.date }}</span>
             </div>
+
+            <div class="item">
+                <tags-selector [tags]="tags" [editable]="false"> </tags-selector>
+            </div>
         </div>
 
     </mat-card-content>

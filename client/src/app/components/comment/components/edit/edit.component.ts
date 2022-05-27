@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute } from '@angular/router';
 import { CommentService } from '../../services/comment.service';
 import { Location } from '@angular/common';
+import { Tag } from '../../model/tag.model';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class CommentEditComponent implements OnInit {
 
   form: FormGroup;
   error?: string;
+  tags: Tag[];
 
   constructor(
     private fb: FormBuilder,
@@ -22,6 +24,7 @@ export class CommentEditComponent implements OnInit {
     private location: Location
   ) {
 
+    this.tags = [];
     this.form = this.fb.group({
       id: [''],
       flightId: ['', [
@@ -48,6 +51,7 @@ export class CommentEditComponent implements OnInit {
           this.flightId = event.data.flightId;
           this.userId = event.data.user?.id;
           this.comment = event.data.comment;
+          this.tags = event.data.tags || [];
           break;
 
         case "error":
@@ -69,7 +73,11 @@ export class CommentEditComponent implements OnInit {
 
   submitForm() {
     if (this.form.valid) {
-      this.srvCommnet.save(this.form.value);
+      const tags = this.tags.map(tag => tag.id);
+      const commnet = this.form.value;
+      commnet.tags = tags;
+      console.log('submitForm', commnet, tags);
+      this.srvCommnet.save(commnet);
       this.location.back();
     }
   }
