@@ -60,11 +60,9 @@ For more information see the following link: [ksmf-skeleton-rest](https://github
 - ng serve --open 
 - ng generate component components/toolbar
 - ng generate service services/toolbar
-
 - ng generate module components/flight
 - ng generate component components/flight/components/list
 - ng generate service components/flight/services/flight
-
 - ng generate module components/comment
 - ng generate component components/comment/components/list
 - ng generate component components/comment/components/edit
@@ -73,3 +71,4 @@ For more information see the following link: [ksmf-skeleton-rest](https://github
 - ng generate component components/comment/components/tags
 - ng generate service components/comment/services/comment
 - ng generate service components/comment/services/tag
+- ng generate service components/comment/services/user

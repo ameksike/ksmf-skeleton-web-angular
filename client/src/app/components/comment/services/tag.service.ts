@@ -16,7 +16,6 @@ export class TagService {
   }
 
   list(filter?: { [key: string]: any }) {
-    console.log('list,filter', filter);
     const params = filter ? "filter=" + JSON.stringify(filter) : ''
     fetch(this.url + '?' + params, { method: 'GET' })
       .then(response => response.json())

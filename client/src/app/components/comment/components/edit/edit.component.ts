@@ -4,6 +4,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CommentService } from '../../services/comment.service';
 import { Location } from '@angular/common';
 import { Tag } from '../../model/tag.model';
+import { User } from '../../model/user.model';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -16,14 +18,16 @@ export class CommentEditComponent implements OnInit {
   form: FormGroup;
   error?: string;
   tags: Tag[];
+  users: User[];
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private srvCommnet: CommentService,
+    private srvUser: UserService,
     private location: Location
   ) {
-
+    this.users = [];
     this.tags = [];
     this.form = this.fb.group({
       id: [''],
@@ -33,9 +37,8 @@ export class CommentEditComponent implements OnInit {
         Validators.maxLength(6),
         Validators.pattern(/[0-9]/)
       ]],
-      userId: ['', [
-        Validators.required,
-        Validators.pattern(/[0-9]/)
+      user: ['', [
+        Validators.required
       ]],
       comment: ['', [
         Validators.required,
@@ -49,7 +52,7 @@ export class CommentEditComponent implements OnInit {
         case "select":
           this.id = event.data.id;
           this.flightId = event.data.flightId;
-          this.userId = event.data.user?.id;
+          this.user = event.data.user;
           this.comment = event.data.comment;
           this.tags = event.data.tags || [];
           break;
@@ -59,6 +62,26 @@ export class CommentEditComponent implements OnInit {
           break;
       }
     });
+
+    this.srvUser.model.subscribe(event => {
+      switch (event.action) {
+        case "list":
+          this.users = event.data;
+          break;
+
+        case "error":
+          this.error = event.data;
+          break;
+      }
+    });
+
+    this.user?.valueChanges.subscribe(s => {
+      //console.log(`The selected value is:`, s);
+    });
+  }
+
+  compareSelection(object1: any, object2: any) {
+    return object1 && object2 && object1.id == object2.id;
   }
 
   ngOnInit(): void {
@@ -69,6 +92,8 @@ export class CommentEditComponent implements OnInit {
     if (id) {
       this.srvCommnet.select(id);
     }
+
+    this.srvUser.list();
   }
 
   submitForm() {
@@ -76,6 +101,8 @@ export class CommentEditComponent implements OnInit {
       const tags = this.tags.map(tag => tag.id);
       const commnet = this.form.value;
       commnet.tags = tags;
+      commnet.userId = commnet.user?.id;
+
       console.log('submitForm', commnet, tags);
       this.srvCommnet.save(commnet);
       this.location.back();
@@ -101,11 +128,11 @@ export class CommentEditComponent implements OnInit {
     this.flightId?.setValue(value);
   }
 
-  get userId() {
-    return this.form.get('userId');
+  get user() {
+    return this.form.get('user');
   }
-  set userId(value) {
-    this.userId?.setValue(value);
+  set user(value) {
+    this.user?.setValue(value);
   }
 
   get comment() {
@@ -119,8 +146,3 @@ export class CommentEditComponent implements OnInit {
     return this.form.controls[control].hasError(error);
   }
 }
-
-
-// https://codesource.io/getting-started-with-angular-reactive-form-validation/
-// https://www.educba.com/angular-material-form-validation/
-// https://www.positronx.io/angular-material-reactive-forms-validation-tutorial/
