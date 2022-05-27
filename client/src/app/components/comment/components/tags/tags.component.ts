@@ -87,8 +87,12 @@ export class TagsComponent implements OnInit {
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.tags.push(event.option.value);
-    this.onSelect.emit(event.option.value);
+    const tag = event.option.value;
+    const index = this.tags.findIndex(elem => elem.id === tag.id);
+    if (index === -1) {
+      this.tags.push(tag);
+      this.onSelect.emit(tag);
+    }
     this.tagInput.nativeElement.value = '';
     this.tagCtrl.setValue(null);
   }
