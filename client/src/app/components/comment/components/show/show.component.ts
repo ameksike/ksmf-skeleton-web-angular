@@ -2,6 +2,7 @@ import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Comment } from '../../model/comment.model';
+import { Tag } from '../../model/tag.model';
 import { CommentService } from '../../services/comment.service';
 
 @Component({
@@ -14,6 +15,7 @@ export class CommentShowComponent implements OnInit {
   commnetId: number;
   model?: Comment;
   error?: string;
+  tags: Tag[];
 
   constructor(
     private route: ActivatedRoute,
@@ -21,6 +23,7 @@ export class CommentShowComponent implements OnInit {
     private location: Location
   ) {
     this.commnetId = -1;
+    this.tags = [];
 
     this.srvCommnet.model.subscribe(event => {
       console.log('srvCommnet', event);
@@ -28,6 +31,7 @@ export class CommentShowComponent implements OnInit {
       switch (event.action) {
         case "select":
           this.model = event.data;
+          this.tags = event.data.tags;
           break;
 
         case "error":
@@ -45,7 +49,6 @@ export class CommentShowComponent implements OnInit {
   }
 
   onCancel() {
-    console.log('AAAAAAAAAAAAA');
     this.location.back();
   }
 

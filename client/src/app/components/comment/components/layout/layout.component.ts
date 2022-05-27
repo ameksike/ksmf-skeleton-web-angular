@@ -1,5 +1,7 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ToolbarService } from 'src/app/services/toolbar.service';
 
 @Component({
   selector: 'comment-layout',
@@ -13,8 +15,23 @@ export class CommentLayoutComponent implements OnInit {
   right: { [key: string]: boolean } = {};
 
   constructor(
-    private responsive: BreakpointObserver
-  ) { }
+    private responsive: BreakpointObserver,
+    private router: Router,
+    private srvToolbar: ToolbarService
+  ) {
+    this.srvToolbar.model.subscribe(event => {
+      if (event.action === 'click' && event.data.action === 'create') {
+        this.router.navigate(['/comment/new']);
+      }
+    });
+
+    this.srvToolbar.add({
+      label: 'Create element',
+      action: 'create',
+      icon: 'add_circle_outline',
+      tooltip: 'Create a new comment'
+    });
+  }
 
   ngOnInit(): void {
 

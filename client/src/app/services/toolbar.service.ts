@@ -3,7 +3,8 @@ import { EventEmitter, Injectable } from '@angular/core';
 export interface ToolbarOption {
   label: string,
   action: string,
-  icon: string
+  icon: string,
+  tooltip?: string
 }
 
 @Injectable({
@@ -18,15 +19,13 @@ export class ToolbarService {
     this.model = new EventEmitter;
     this.data = [
       {
-        label: 'Create element',
-        action: 'create',
-        icon: 'add_circle_outline'
-      }, {
         label: 'Add to favorite this app',
+        tooltip: 'Add to favorite this app',
         action: 'favorite',
         icon: 'favorite'
       }, {
         label: 'Share this app',
+        tooltip: 'Share this app',
         action: 'share',
         icon: 'share'
       }

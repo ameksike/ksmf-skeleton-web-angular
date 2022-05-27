@@ -2,9 +2,13 @@
 Template to create web application based on [Angular](https://angular.io/), [Angular Material](https://material.angular.io/)
  and [KsMf](https://github.com/ameksike/ksmf/wiki) in an easy way. This project implements an example where three main entities are managed: Users, Tags and Comments.
 
-## Run demo
-- npm run client:watch
+## Run production mode
+- npm run client:build
 - npm start 
+
+## Run develop mode 
+- npm run client:watch
+- npm run dev
 
 ## Integration 
 This project depends on an external REST API service which provides all the data, therefore it works as an example of system integration. To connect this application with the external service follow the steps below:
@@ -56,14 +60,15 @@ For more information see the following link: [ksmf-skeleton-rest](https://github
 - ng serve --open 
 - ng generate component components/toolbar
 - ng generate service services/toolbar
-
 - ng generate module components/flight
 - ng generate component components/flight/components/list
 - ng generate service components/flight/services/flight
-
 - ng generate module components/comment
 - ng generate component components/comment/components/list
 - ng generate component components/comment/components/edit
 - ng generate component components/comment/components/show
 - ng generate component components/comment/components/layout
+- ng generate component components/comment/components/tags
 - ng generate service components/comment/services/comment
+- ng generate service components/comment/services/tag
+- ng generate service components/comment/services/user

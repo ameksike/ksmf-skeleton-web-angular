@@ -8,35 +8,12 @@
  * */
 const KsMf = require('ksmf');
 class UserModule extends KsMf.app.Module {
-
     /**
-     * @description Define your custom url
-     *              form more information see: https://github.com/ameksike/ksmf/wiki/Routes
+     * @description define custom url
      */
-    initConfig() {
-        //... prefix:   /api/v1/security
-        const prefix = "/api/v1" + this.prefix;
-        
-        this.routes = [{
-            // oauth authorization code: step 1
-            route: prefix + "/oauth/connected",
-            controller: 'DefaultController',
-            action: 'oauthConnect',
-            method: 'get'
-        },{
-            // oauth authorization code: step 2
-            route: prefix + "/oauth/response",
-            controller: 'DefaultController',
-            action: 'oauthResponse',
-            method: 'get'
-        },  {
-            // oauth client credential
-            route: prefix + "/oauth/apikey",
-            controller: 'DefaultController',
-            action: 'oauthApikey',
-            method: 'get'
-        }];
+     initConfig() {
+        this.prefix = "/api/v1" + this.prefix;
+        super.initConfig();
     }
-
 }
 module.exports = UserModule;

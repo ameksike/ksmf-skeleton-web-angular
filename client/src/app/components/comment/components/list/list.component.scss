@@ -5,3 +5,28 @@
 table {
     width: 100%;
 }
+
+.mat-column-comment {
+    width: 60%;
+    padding: 5px;
+}
+
+.mat-column-flightId {
+    width: 10%;
+    padding: 5px;
+}
+
+.mat-column-user {
+    width: 10%;
+    padding: 5px;
+}
+
+.mat-column-action {
+    width: 20%;
+    padding: 5px;
+}
+/*
+@include mat-table-columns((
+    comment: (width: 60%, color: gray),
+    flightId: (width: 10%)
+));*/

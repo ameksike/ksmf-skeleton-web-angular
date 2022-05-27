@@ -4,7 +4,7 @@
 
     <mat-form-field appearance="fill">
         <mat-label>Content</mat-label>
-        <textarea matInput placeholder="Set the comment content" formControlName="comment" > </textarea>
+        <textarea matInput placeholder="Set the comment content" formControlName="comment"> </textarea>
         <!-- error -->
         <mat-error *ngIf="onError('comment', 'required')">
             You must provide a <strong>comment text</strong>
@@ -31,15 +31,19 @@
 
     <mat-form-field appearance="fill">
         <mat-label>User owner</mat-label>
-        <input matInput placeholder="Set the user owner" formControlName="userId">
+        <mat-select formControlName="user" placeholder="Set the user owner" [compareWith]="compareSelection">
+            <mat-option *ngFor="let user of users" [value]="user">
+              {{user.name}}
+            </mat-option>
+          </mat-select>
+
         <!-- error -->
-        <mat-error *ngIf="onError('userId', 'required')">
-            You must provide a <strong>userId</strong>
-        </mat-error>
-        <mat-error *ngIf="onError('userId', 'pattern')">
-            You must provide a <strong>userId as a number</strong>
+        <mat-error *ngIf="onError('user', 'required')">
+            You must provide a <strong>user</strong>
         </mat-error>
     </mat-form-field>
+
+    <tags-selector [tags]="tags"> </tags-selector>
 
     <button mat-raised-button color="primary" type="submit">Save</button>
 </form>

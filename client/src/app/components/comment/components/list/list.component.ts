@@ -20,7 +20,7 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   displayedColumns: string[] = ['comment', 'flightId', 'user', 'action'];
   dataSource = new MatTableDataSource<Comment>([]);
   error: string;
-  flightId: string;
+  flightId: string | null;
 
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -43,13 +43,12 @@ export class CommentListComponent implements AfterViewInit, OnInit {
 
         case "error":
           this.error = event.data;
+          console.log('[ERROR]', this.error);
           break;
-      }
-    });
 
-    this.srvToolbar.model.subscribe(event => {
-      if (event.action === 'click' && event.data.action === 'create') {
-        this.router.navigate(['/comment/new']);
+        default:
+          this.srvComment.list(this.flightId ? { flightId: this.flightId } : {});
+          break;
       }
     });
   }
@@ -57,8 +56,8 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   ngOnInit(): void {
 
     this.routehandler = this.route.paramMap.subscribe((params: ParamMap) => {
-      const id = params.get('id');
-      this.srvComment.list(id ? { flightId: id } : {});
+      this.flightId = params.get('id');
+      this.srvComment.list(this.flightId ? { flightId: this.flightId } : {});
     });
 
     this.responsive.observe([

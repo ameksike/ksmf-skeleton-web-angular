@@ -8,6 +8,7 @@
         "log": 2,
         "module": {
             "load": [
+                "flight",
                 "user",
                 "comment",
                 "app"

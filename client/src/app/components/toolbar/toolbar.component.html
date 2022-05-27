@@ -5,7 +5,7 @@
 
     <span class="example-spacer"></span>
 
-    <button mat-icon-button *ngFor="let item of btn" (click)="onClick(item)" class="example-icon favorite-icon" >
+    <button mat-icon-button *ngFor="let item of btn" (click)="onClick(item)" matTooltip="{{ item.tooltip }}" class="example-icon favorite-icon" >
         <mat-icon> {{ item.icon }}</mat-icon>
     </button>
 
