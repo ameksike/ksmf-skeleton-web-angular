@@ -97,8 +97,8 @@ export class TagsComponent implements OnInit {
     this.tagCtrl.setValue(null);
   }
 
-  private filter(value: Tag): Tag[] {
-    const filterValue = value && value.name ? value.name.toLowerCase() : '';
+  private filter(value: Tag | string): Tag[] {
+    const filterValue = typeof(value) === 'string' ?  value.toLowerCase() :  (value && value.name ? value.name.toLowerCase() : '');
     return this.allTags.filter(tag => tag && tag.name ? tag.name.toLowerCase().includes(filterValue) : false);
   }
 }
