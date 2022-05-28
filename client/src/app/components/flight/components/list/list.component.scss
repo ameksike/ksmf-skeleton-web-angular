@@ -5,3 +5,7 @@
 .msg-empty {
     margin-top: 1rem;
 }
+
+.mat-list-option:hover .mat-cell {
+    border-color: currentColor;
+}

@@ -59,7 +59,6 @@ export class TagsComponent implements OnInit {
   }
 
   add(event: MatChipInputEvent): void {
-    console.log('add');
     const value = (event.value || '').trim();
     //... Add our tag
     if (value) {
@@ -69,9 +68,7 @@ export class TagsComponent implements OnInit {
             this.tags.push(data);
             this.onAdd.emit(data);
           }
-          console.log('this.srvTag.create', data);
         });
-
     }
     //... Clear the input value
     event.chipInput!.clear();
@@ -98,7 +95,7 @@ export class TagsComponent implements OnInit {
   }
 
   private filter(value: Tag | string): Tag[] {
-    const filterValue = typeof(value) === 'string' ?  value.toLowerCase() :  (value && value.name ? value.name.toLowerCase() : '');
+    const filterValue = typeof (value) === 'string' ? value.toLowerCase() : (value && value.name ? value.name.toLowerCase() : '');
     return this.allTags.filter(tag => tag && tag.name ? tag.name.toLowerCase().includes(filterValue) : false);
   }
 }
