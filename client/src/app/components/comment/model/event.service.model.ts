@@ -1,4 +1,8 @@
 export interface EventService {
     action: string, 
-    data: any
+    page?: number, 
+    size?: number, 
+    total?: number, 
+    filter?: any, 
+    data?: any
 }

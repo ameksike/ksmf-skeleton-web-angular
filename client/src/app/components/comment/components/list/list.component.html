@@ -1,16 +1,21 @@
 <span class="title"> Comment List </span>
-<div class="container box-vertical">
+
+<div class="loading-shade">
+    <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
+</div>
+
+<div class="container box-vertical" *ngIf="!isLoadingResults">
 
     <mat-form-field appearance="standard">
         <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
+        <input matInput (keyup.enter)="applyFilter($event)" [formControl]="filter" placeholder="Search comment by content, press ENTER to get data." #input>
     </mat-form-field>
 
-    <table mat-table [dataSource]="dataSource">
+    <table mat-table [dataSource]="dataSource" matSort matSortActive="comment" matSortDisableClear matSortDirection="desc">
 
         <!-- Comment Column -->
         <ng-container matColumnDef="comment">
-            <th mat-header-cell *matHeaderCellDef> Comment </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header disableClear> Comment </th>
             <td mat-cell *matCellDef="let element"> {{element.comment}} </td>
         </ng-container>
 
@@ -46,6 +51,14 @@
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
     </table>
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons aria-label="Select page of periodic elements">
+    <mat-paginator 
+        #paginator
+        (page)="pageEvent = onPage($event)"
+        [pageIndex]="pageIndex"
+        [length]="length" 
+        [pageSize]="pageSize"
+        [pageSizeOptions]="[3, 5, 10, 20, 50]" 
+        showFirstLastButtons aria-label="Select page of periodic elements"
+        >
     </mat-paginator>
 </div>

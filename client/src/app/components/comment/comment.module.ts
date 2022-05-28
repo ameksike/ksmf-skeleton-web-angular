@@ -18,8 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
-
-
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { TagsComponent } from './components/tags/tags.component';
 
@@ -47,7 +46,8 @@ import { TagsComponent } from './components/tags/tags.component';
     MatTooltipModule,
     MatChipsModule,
     MatSelectModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatProgressSpinnerModule
   ]
 })
 export class CommentModule { }
