@@ -41,5 +41,19 @@ class TagController extends KsMf.app.Controller {
         }
     }
 
+    /**
+     * @description create  a new tag
+     *              see http://localhost:3005/api/v1/doc/
+     * @param {OBJECT} req 
+     * @param {OBJECT} res 
+     * @param {OBJECT} next 
+     */
+    async insert(req, res, next) {
+        const payload = req.body;
+        const result = await this.srvExternal.insertTag(payload);
+        this.logger.prefix('Tag.Controller').info('INSERT', result);
+        res.json(result);
+    }
+
 }
 module.exports = TagController;

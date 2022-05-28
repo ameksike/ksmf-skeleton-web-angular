@@ -189,6 +189,25 @@ class MyAPI extends SrvAPI {
             method: 'get'
         });
     }
+
+    /**
+     * @description create comment
+     * @param {OBJECT} data 
+     * @param {NUMBER} data.name 
+     * @returns {OBJECT} {
+            "data": {
+                "id": 12,
+                "name": "Claims"
+            }
+        }
+     */
+    insertTag(data) {
+        return this.req({
+            url: `/api/v1/tag`,
+            method: 'post',
+            data
+        });
+    }
 }
 
 module.exports = MyAPI;

@@ -45,9 +45,8 @@ export class TagService {
   }
 
   create(tag: Tag): Promise<Tag> {
-    const _this = this;
     return new Promise((resolve, reject) => {
-      fetch(_this.url, {
+      fetch(this.url, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -57,29 +56,14 @@ export class TagService {
       })
         .then(response => response.json())
         .then(response => {
-          _this.model.emit({ action: 'create', data: response.data });
+          this.model.emit({ action: 'create', data: response.data });
           resolve(response.data);
         })
         .catch(error => {
-          _this.model.emit({ action: 'error', data: 'ERROR: on create acction' })
+          this.model.emit({ action: 'error', data: 'ERROR: on create acction' })
           reject(error);
         });
     });
-    /*
-        const response = await fetch(this.url, {
-    
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(tag)
-        });
-        const tmp = await response.json();
-        this.model.emit({ action: 'create', data: tmp.data });
-        return tmp.data;*/
-
-    /*return */
   }
 
   save(tag: Tag) {
