@@ -10,17 +10,22 @@ export class CommentService {
   model: EventEmitter<EventService>;
   url: string;
 
-  constructor() {
+  constructor() { 
     this.model = new EventEmitter();
     this.url = '/api/v1/comment';
   }
 
-  list(filter?: { [key: string]: any }) {
-    console.log('list', filter);
-    const params = filter ? "filter=" + JSON.stringify(filter) : ''
+  list(filter?: string[][], page = 1, size = 10, sort = null) {
+    const params = `page=${page + 1}&size=${size}` +
+      (filter ? "&filter=" + JSON.stringify(filter) : '') +
+      (sort ? "&sort=" + JSON.stringify(sort) : '');
+
     fetch(this.url + '?' + params, { method: 'GET' })
       .then(response => response.json())
-      .then(response => this.model.emit({ action: 'list', data: response.data.data }))
+      .then(response => this.model.emit({
+        action: 'list',
+        ...response.data
+      }))
       .catch(error => this.model.emit({ action: 'error', data: 'Not loaded data' }));
   }
 

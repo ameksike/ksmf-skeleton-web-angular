@@ -25,8 +25,35 @@ table {
     width: 20%;
     padding: 5px;
 }
+
 /*
 @include mat-table-columns((
     comment: (width: 60%, color: gray),
     flightId: (width: 10%)
 ));*/
+
+.loading-shade {
+    position: relative;
+    top: 5rem;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mat-row .mat-cell {
+    border-bottom: 1px solid transparent;
+    border-top: 1px solid transparent;
+    cursor: pointer;
+}
+
+.mat-row:hover .mat-cell {
+    border-color: currentColor;
+}
+
+.row-is-clicked {
+    font-weight: bold;
+}
