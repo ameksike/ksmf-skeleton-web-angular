@@ -42,8 +42,7 @@ export class CommentListComponent implements AfterViewInit, OnInit {
     private srvComment: CommentService,
     private router: Router,
     private route: ActivatedRoute,
-    private responsive: BreakpointObserver,
-    private ref: ChangeDetectorRef
+    private responsive: BreakpointObserver
   ) {
     this.error = '';
     this.flightId = '';
