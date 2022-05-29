@@ -5,6 +5,9 @@
 const KsMf = require('ksmf');
 //... load system
 const app = new KsMf.app.WEB(__dirname + "/../../../").init();
+//... load mocks
+const axios = require('axios');
+jest.mock('axios');
 //... load targets
 const srvAsyncHandler = app.helper.get({
     name: 'AsyncHandler',
@@ -44,6 +47,8 @@ describe('AsyncHandler', () => {
         expect(srvMyAPI).toBeInstanceOf(Object);
         expect(res.threads).toBe(MAX_CONCURRENCY);
         expect(res.result.length).toBe(URLS.length);
+        expect(axios).toHaveBeenCalled();
+        expect(axios.mock.calls.length).toBe(URLS.length);
         done();
     });
 });
