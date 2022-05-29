@@ -35,12 +35,13 @@ class SrvAPI {
      */
     async req(options) {
         options = options || {};
+        axios.defaults.adapter = require('axios/lib/adapters/http');
         const headers = Object.assign({
             'Authorization': this.token
         }, options.headers || {});
         const opt = {
             headers,
-            url: this.base + options.url,
+            url: /https{0,1}:\/\//.test(options.url) ? options.url : this.base + options.url,
             method: options.method || 'post',
             data: options.data || {}
         }
