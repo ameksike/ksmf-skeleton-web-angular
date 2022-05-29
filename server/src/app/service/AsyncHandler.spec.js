@@ -24,7 +24,7 @@ const srvMyAPI = app.helper.get({
 });
 
 //... define tests
-describe('UNIT_TEST_AsyncHandler', () => {
+describe('AsyncHandler', () => {
     it('Fetch URLs', async done => {
         const MAX_CONCURRENCY = 3;
         const URLS = [
