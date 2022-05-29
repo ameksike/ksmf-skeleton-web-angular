@@ -6,11 +6,13 @@
   "scripts": {
     "start": "node server/bin/server.js",
     "build": "cd client && npm install && npm run build",
-    "test": "cd client && npm run test",
+    "test": "npm run server:test && npm run client:test",
     "dev": "nodemon server/bin/server.js",
     "client:start": "cd client && npm start",
     "client:build": "cd client && npm run build",
-    "client:watch": "cd client && npm run watch"    
+    "client:watch": "cd client && npm run watch",
+    "client:test": "cd client && npm run test",
+    "server:test": "jest /server"
   },
   "keywords": [
     "ksmf",
