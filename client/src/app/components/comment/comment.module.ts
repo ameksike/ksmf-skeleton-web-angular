@@ -4,6 +4,8 @@ import { CommentListComponent } from './components/list/list.component';
 import { CommentEditComponent } from './components/edit/edit.component';
 import { CommentShowComponent } from './components/show/show.component';
 import { CommentLayoutComponent } from './components/layout/layout.component';
+import { TagsComponent } from './components/tags/tags.component';
+
 import { FlightModule } from '../flight/flight.module';
 import { AppRoutingModule } from './comment-routing.module';
 import { MatTableModule } from '@angular/material/table';
@@ -20,7 +22,6 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { TagsComponent } from './components/tags/tags.component';
 
 @NgModule({
   declarations: [

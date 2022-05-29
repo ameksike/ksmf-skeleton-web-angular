@@ -21,13 +21,16 @@ import { ToolbarComponent } from './components/toolbar/toolbar.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,
     BrowserAnimationsModule,
+    AppRoutingModule,
 
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
     MatTooltipModule
+  ],
+  exports: [
+    ToolbarComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

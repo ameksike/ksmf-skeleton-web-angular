@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 import { TagsComponent } from './tags.component';
 
@@ -8,7 +9,10 @@ describe('TagsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TagsComponent ]
+      imports: [MatAutocompleteModule],
+      declarations: [ 
+        TagsComponent 
+      ]
     })
     .compileComponents();
   });
