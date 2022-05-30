@@ -22,7 +22,14 @@ Run a demo test that, given an array of URLs and a MAX_CONCURRENCY integer, impl
 - npx jest ./src/app/service/AsyncHandler.spec.js
 
 ## Integration 
-This project depends on an external REST API service which provides all the data, therefore it works as an example of system integration. To connect this application with the external service follow the steps below:
+This project depends on an external REST API service which provides all the data, therefore it works as an example of system integration. 
+```
++----------------+                       +-------------+
+| Web App        |<--------------------->|  REST API   |
+| Angular / KsMf |          HTTPS        |  KsMf       |
++----------------+                       +-------------+
+```
+To connect this application with the external service follow the steps below:
 - git clone https://github.com/ameksike/ksmf-skeleton-rest.git
 - cd ksmf-skeleton-rest
 - npm install
