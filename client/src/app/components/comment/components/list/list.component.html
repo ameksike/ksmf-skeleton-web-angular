@@ -14,9 +14,9 @@
     <table mat-table [dataSource]="dataSource" 
         matSort 
         matSortActive="comment" 
-        matSortDirection="desc" 
         matSortDisableClear 
         (matSortChange)="onSortChange($event)"
+        (contentChanged)="onChanged()" 
         >
 
         <!-- Comment Column -->

@@ -146,6 +146,10 @@ export class CommentListComponent implements AfterViewInit, OnInit {
     this.sortState = [[sortState.active, sortState.direction]];
     this.load();
   }
+  
+  onChanged() {
+    console.log('onChanged()');
+  }
 
   load() {
     this.isLoadingResults = true;
