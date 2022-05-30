@@ -10,12 +10,12 @@ export class CommentService {
   model: EventEmitter<EventService>;
   url: string;
 
-  constructor() { 
+  constructor() {
     this.model = new EventEmitter();
     this.url = '/api/v1/comment';
   }
 
-  list(filter?: string[][], page = 1, size = 10, sort = null) {
+  list(filter?: string[][], page = 1, size = 10, sort?: string[][] | null) {
     const params = `page=${page + 1}&size=${size}` +
       (filter ? "&filter=" + JSON.stringify(filter) : '') +
       (sort ? "&sort=" + JSON.stringify(sort) : '');

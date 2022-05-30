@@ -11,7 +11,13 @@
         <input matInput (keyup.enter)="applyFilter($event)" [formControl]="filter" placeholder="Search comment by content, press ENTER to get data." #input>
     </mat-form-field>
 
-    <table mat-table [dataSource]="dataSource" matSort matSortActive="comment" matSortDisableClear matSortDirection="desc">
+    <table mat-table [dataSource]="dataSource" 
+        matSort 
+        matSortActive="comment" 
+        matSortDirection="desc" 
+        matSortDisableClear 
+        (matSortChange)="onSortChange($event)"
+        >
 
         <!-- Comment Column -->
         <ng-container matColumnDef="comment">

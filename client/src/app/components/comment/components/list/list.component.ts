@@ -6,9 +6,7 @@ import { Comment } from '../../model/comment.model';
 import { CommentService } from '../../services/comment.service';
 
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort, SortDirection } from '@angular/material/sort';
-import { merge, Observable, of as observableOf } from 'rxjs';
-import { catchError, map, startWith, switchMap } from 'rxjs/operators';
+import { MatSort, MatSortHeader, Sort, SortDirection } from '@angular/material/sort';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -33,10 +31,11 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   pageIndex: number = 0;
   pageSize: number = 5;
   length: number = 10;
-  filter: FormControl; 
+  filter: FormControl;
+  sortState: string[][] = [];
 
   @ViewChild('paginator') paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
 
   constructor(
     private srvComment: CommentService,
@@ -46,7 +45,7 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   ) {
     this.error = '';
     this.flightId = '';
-    this.filter = new FormControl('', {initialValueIsDefault: true});
+    this.filter = new FormControl('', { initialValueIsDefault: true });
   }
 
   ngOnInit(): void {
@@ -68,6 +67,7 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
+    console.log('this.dataSource.sort', this.dataSource.sort);
 
     this.srvComment.model.subscribe(event => {
       switch (event.action) {
@@ -75,9 +75,12 @@ export class CommentListComponent implements AfterViewInit, OnInit {
           this.pageIndex = event.page ? event.page - 1 : this.pageIndex;
           this.pageSize = event.size ? event.size : this.pageSize;
           this.length = event.total ? event.total : this.length;
-
           this.dataSource.data = event.data;
           this.isLoadingResults = false;
+          const sort = event.sort ? event.sort : [];
+          if (sort[0]) {
+            this.setSort(sort[0][0], (sort[0][1] as 'asc' | 'desc'));
+          }
           break;
 
         case "error":
@@ -86,14 +89,7 @@ export class CommentListComponent implements AfterViewInit, OnInit {
           break;
 
         default:
-          console.log('onDATA >> ', 'default');
-          this.isLoadingResults = true;
-          this.srvComment.list(
-            this.getFilters(),
-            this.pageIndex,
-            this.pageSize,
-            null
-          );
+          this.load();
           break;
       }
     });
@@ -101,17 +97,12 @@ export class CommentListComponent implements AfterViewInit, OnInit {
     //... first load of data
     this.routehandler = this.route.paramMap.subscribe((params: ParamMap) => {
       this.flightId = params.get('id');
-      this.isLoadingResults = true;
-      this.srvComment.list(
-        this.getFilters(),
-        this.pageIndex,
-        this.pageSize,
-        null
-      );
+      this.load();
     });
   }
 
-  getFilters(str = '') {
+  getFilters() {
+    let str = this.dataSource.filter;
     str = str.trim().toLowerCase();
     const filters = [];
     if (this.flightId) {
@@ -126,17 +117,8 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-    this.isLoadingResults = true;
-    this.srvComment.list(
-      this.getFilters(filterValue),
-      0,
-      this.pageSize,
-      null
-    );
-
-    /*if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }*/
+    this.pageIndex = 0;
+    this.load();
   }
 
   onShow(item: Comment) {
@@ -156,14 +138,31 @@ export class CommentListComponent implements AfterViewInit, OnInit {
   onPage(event?: PageEvent) {
     this.pageIndex = event ? event.pageIndex : this.pageIndex;
     this.pageSize = event ? event.pageSize : this.pageSize;
+    this.load();
+    return event;
+  }
+
+  onSortChange(sortState: Sort) {
+    this.sortState = [[sortState.active, sortState.direction]];
+    this.load();
+  }
+
+  load() {
     this.isLoadingResults = true;
     this.srvComment.list(
       this.getFilters(),
       this.pageIndex,
       this.pageSize,
-      null
+      this.sortState
     );
-    return event;
   }
 
+  setSort(id: string, start?: 'asc' | 'desc') {
+    start = start || 'asc';
+    const matSort = this.dataSource.sort;
+    if (matSort) {
+      matSort.sort({ id, start, disableClear: true });
+      (matSort.sortables.get(id) as MatSortHeader)._setAnimationTransitionState({ toState: 'active' });
+    }
+  }
 }
