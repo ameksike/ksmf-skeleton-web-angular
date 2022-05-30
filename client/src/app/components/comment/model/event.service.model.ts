@@ -3,6 +3,7 @@ export interface EventService {
     page?: number, 
     size?: number, 
     total?: number, 
-    filter?: any, 
+    filter?: string[][], 
+    sort?: string[][], 
     data?: any
 }
